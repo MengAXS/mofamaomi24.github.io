@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梦岸一方 - 创意展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A3B4C',
+                        secondary: '#D4AF37',
+                        accent: '#6A8CAF',
+                        neutral: '#F5F5F5',
+                        dark: '#1A202C'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'progress': 'progress 1.5s linear infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        progress: {
+                            '0%': { width: '0%' },
+                            '100%': { width: '100%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 300ms;
+            }
+            .backdrop-blur-sm {
+                backdrop-filter: blur(4px);
+            }
+            .book-shadow {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            }
+            .page-turn {
+                transition: transform 0.5s ease;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-neutral text-dark min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-300">
+        <nav class="bg-primary/90 backdrop-blur-sm text-white">
+            <div class="container mx-auto px-4 py-3 md:py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <a href="index.html" class="text-2xl md:text-3xl font-bold text-secondary flex items-center">
+                            <span class="fa fa-bookmark-o mr-2"></span>
+                            <span>梦岸一方</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 桌面导航 -->
+                    <div class="hidden md:flex space-x-8">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium text-secondary">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium">关于我们</a>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <button id="mobile-menu-button" class="md:hidden text-white text-xl">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+                
+                <!-- 移动端导航菜单 -->
+                <div id="mobile-menu" class="md:hidden hidden mt-4 pb-2 animate-fade-in">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1 text-secondary">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">关于我们</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 页面标题区域 -->
+    <section class="pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-br from-primary to-dark text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-4 leading-tight animate-slide-up text-shadow">
+                    梦岸一方
+                </h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-200 max-w-2xl animate-slide-up">
+                    展示创意作品与艺术表达，发现生活中的美好与灵感
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 展示内容 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <!-- 作品网格 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="pdf-grid">
+                <!-- PDF内容将通过JavaScript动态加载 -->
+                <div class="col-span-full text-center py-12" id="loading-message">
+                    <i class="fa fa-spinner fa-spin text-3xl text-primary mb-4"></i>
+                    <p>加载PDF文件中...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PDF预览脚本（已移除pdf.js，改用预生成图片） -->
+    <script>
+        // 手动指定需要展示的PDF文件及对应预览图片（需将图片放在resources/showcase/pictures目录下）
+        const pdfFiles = [
+            { 
+                path: '梦岸一方 - 2024合订本.pdf', 
+                preview: 'resources/showcase/pictures/梦岸一方 - 2024合订本.jpg', 
+                placeholder: 'resources/showcase/pictures/梦岸一方 - 2024合订本-placeholder.jpg' 
+            },  
+            { 
+                path: '梦岸一方 - 2025第一季度.pdf', 
+                preview: 'resources/showcase/pictures/梦岸一方 - 2025第一季度.jpg', 
+                placeholder: 'resources/showcase/pictures/梦岸一方 - 2025第一季度-placeholder.jpg' 
+            } 
+        ];
+
+        // 加载并展示PDF文件
+        async function loadPdfShowcase() {
+            const gridContainer = document.getElementById('pdf-grid');
+            const loadingMessage = document.getElementById('loading-message');
+    
+            if (pdfFiles.length === 0) {
+                loadingMessage.innerHTML = '<p class="text-gray-500">未找到PDF文件</p>';
+                return;
+            }
+    
+            // 清空加载消息
+            loadingMessage.remove();
+    
+            // 为每个PDF文件创建展示卡片
+            for (const pdf of pdfFiles) {
+                // 从文件名提取标题（去除.pdf后缀）
+                const title = pdf.path.replace(/\.pdf$/i, '');
+                
+                // 创建卡片容器
+                const card = document.createElement('div');
+                card.className = 'group overflow-hidden rounded-lg shadow-sm transition-shadow duration-300 hover:shadow-lg';
+    
+                // 创建PDF预览容器
+                const previewContainer = document.createElement('div');
+                previewContainer.className = 'aspect-w-4 aspect-h-3 overflow-hidden bg-gray-100 flex items-center justify-center relative';
+                
+                // 添加进度条加载指示器
+                const loadingIndicator = document.createElement('div');
+                loadingIndicator.className = 'absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 z-10';
+                loadingIndicator.innerHTML = `
+                    <div class="w-1/2 h-1 bg-gray-200 rounded-full overflow-hidden mb-4">
+                        <div class="h-full bg-primary animate-progress rounded-full"></div>
+                    </div>
+                    <span class="text-sm text-gray-600">加载预览图中...</span>
+                `;
+                previewContainer.appendChild(loadingIndicator);
+
+                // 创建渐进式加载容器（模糊占位图）
+                const placeholder = document.createElement('div');
+                placeholder.className = 'w-full h-full bg-cover bg-center blur-sm opacity-100 transition-opacity duration-500';
+                placeholder.style.backgroundImage = `url('${pdf.placeholder}')`;
+                previewContainer.appendChild(placeholder);
+
+                // 创建高清图片用于预览
+                const img = document.createElement('img');
+                img.className = 'w-full h-full object-cover opacity-0 transition-opacity duration-500';
+                img.src = pdf.preview; // 建议使用WebP格式优化体积
+                img.alt = title;
+                img.loading = 'lazy'; // 懒加载，优先加载可视区域
+                previewContainer.appendChild(img);
+    
+                // 创建PDF标题容器
+                const titleContainer = document.createElement('div');
+                titleContainer.className = 'p-4';
+                titleContainer.innerHTML = `
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 group-hover:text-primary transition-colors">${title}</h3>
+                    <div class="flex gap-2 mt-4">
+                        <a href="resources/showcase/${pdf.path}" download class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition flex-1 justify-center">
+                            <i class="fa fa-download mr-2"></i> 下载PDF
+                        </a>
+                    </div>
+                `;
+    
+                // 将元素组合到卡片中
+                card.appendChild(previewContainer);
+                card.appendChild(titleContainer);
+                gridContainer.appendChild(card);
+    
+                // 图片加载完成后切换显示状态
+                img.onload = () => {
+                    // 隐藏加载指示器和占位图，显示高清图
+                    loadingIndicator.classList.add('opacity-0');
+                    setTimeout(() => loadingIndicator.remove(), 500); // 等待过渡完成后移除
+                    placeholder.classList.add('opacity-0');
+                    img.classList.add('opacity-100');
+                };
+                
+                // 图片加载失败处理
+                img.onerror = () => {
+                    console.error('图片预览加载失败:', pdf.preview);
+                    loadingIndicator.remove();
+                    previewContainer.innerHTML = `
+                        <div class="w-full h-full flex flex-col items-center justify-center bg-gray-50">
+                            <i class="fa fa-file-image-o text-5xl text-red-500 mb-2"></i>
+                            <p class="text-red-500 text-sm">预览图片加载失败</p>
+                        </div>
+                    `;
+                };
+            }
+        }
+    
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', loadPdfShowcase);
+    </script>
+
+    <footer class="bg-primary text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <a href="index.html" class="text-2xl font-bold text-secondary flex items-center mb-6">
+                        <span class="fa fa-bookmark-o mr-2"></span>
+                        <span>梦岸一方</span>
+                    </a>
+                    <p class="text-gray-300 mb-6">以热爱探索一切。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-wechat"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">首页</a></li>
+                        <li><a href="essays.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸杂谈</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">精选文章</a></li>
+                        <li><a href="showcase.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸一方</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">关于我们</a></li>
+                    </ul>
+                </div>
+            
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-3 text-secondary"></i>
+                            <span class="text-gray-300">梦中的彼岸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-3 text-secondary"></i>
+                            <span class="text-gray-300">聆听彼岸的呼唤吧</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-3 text-secondary"></i>
+                            <span class="text-gray-300">@dreamshore.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">订阅更新</h4>
+                    <p class="text-gray-300 mb-4">订阅我们的电子邮件，获取最新内容和活动通知。</p>
+                    <p class="text-gray-400 text-sm">我们尊重您的隐私，不会向第三方分享您的信息。</p>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 梦岸一方. 保留所有权利.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">隐私政策</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">使用条款</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">Cookie 政策</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端菜单脚本 -->
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>

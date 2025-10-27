@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梦岸杂谈 - 梦岸一方</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A3B4C',
+                        secondary: '#D4AF37',
+                        accent: '#6A8CAF',
+                        neutral: '#F5F5F5',
+                        dark: '#1A202C'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'bounce-slow': 'bounce 2s infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 300ms;
+            }
+            .backdrop-blur-sm {
+                backdrop-filter: blur(4px);
+            }
+        }
+    </style>
+  </head>
+  <body class="font-inter bg-neutral text-dark min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-300">
+        <nav class="bg-primary/90 backdrop-blur-sm text-white">
+            <div class="container mx-auto px-4 py-3 md:py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <a href="index.html" class="text-2xl md:text-3xl font-bold text-secondary flex items-center">
+                            <span class="fa fa-bookmark-o mr-2"></span>
+                            <span>梦岸一方</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 桌面导航 -->
+                    <div class="hidden md:flex space-x-8">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium text-secondary">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium">关于我们</a>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <button id="mobile-menu-button" class="md:hidden text-white text-xl">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+                
+                <!-- 移动端导航菜单 -->
+                <div id="mobile-menu" class="md:hidden hidden mt-4 pb-2 animate-fade-in">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1 text-secondary">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">关于我们</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 页面标题区域 -->
+    <section class="pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-br from-primary to-dark text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-4 leading-tight animate-slide-up text-shadow">
+                    梦岸杂谈
+                </h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-200 max-w-2xl animate-slide-up">
+                    记录生活中的点滴感悟，分享思想的火花与灵感的瞬间
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文章列表 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <!-- 加载状态 -->
+            <div id="loading-state" class="col-span-full text-center py-20">
+                <div class="inline-block p-4 rounded-full bg-primary/10 mb-4">
+                    <i class="fa fa-pencil-square-o text-3xl text-primary animate-spin-slow"></i>
+                </div>
+                <p class="text-gray-600 text-lg">正在加载杂谈文章...</p>
+                <p class="text-gray-400 mt-2">每一篇都是用心的记录</p>
+            </div>
+            
+            <!-- 无数据状态 -->
+            <div id="empty-state" class="col-span-full text-center py-20 hidden">
+                <div class="inline-block p-4 rounded-full bg-gray-100 mb-4">
+                    <i class="fa fa-file-text-o text-3xl text-gray-400"></i>
+                </div>
+                <p class="text-gray-600 text-lg">暂无杂谈文章</p>
+                <p class="text-gray-400 mt-2">更多内容正在创作中，敬请期待</p>
+            </div>
+            
+            <div id="article-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden"></div>
+            <div class="mt-12 flex justify-center space-x-2" id="pagination"></div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <a href="index.html" class="text-2xl font-bold text-secondary flex items-center mb-6">
+                        <span class="fa fa-bookmark-o mr-2"></span>
+                        <span>梦岸一方</span>
+                    </a>
+                    <p class="text-gray-300 mb-6">以热爱探索一切。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-wechat"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">首页</a></li>
+                        <li><a href="essays.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸杂谈</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">精选文章</a></li>
+                        <li><a href="showcase.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸一方</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-3 text-secondary"></i>
+                            <span class="text-gray-300">梦中的彼岸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-3 text-secondary"></i>
+                            <span class="text-gray-300">聆听彼岸的呼唤吧</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-3 text-secondary"></i>
+                            <span class="text-gray-300">@dreamshore.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-6">订阅更新</h4>
+                    <p class="text-gray-300 mb-4">订阅我们的电子邮件，获取最新内容和活动通知。</p>
+                    
+                    <p class="text-gray-400 text-sm">我们尊重您的隐私，不会向第三方分享您的信息。</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 梦岸一方. 保留所有权利.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">隐私政策</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">使用条款</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">Cookie 政策</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- 自定义模态框 -->
+    <div id="fullContentModal" class="fixed inset-0 bg-black/50 z-50 hidden justify-center items-center">
+        <div class="bg-white rounded-lg shadow-lg max-w-4xl w-11/12 p-6 relative mx-auto my-8 transform transition-all duration-300 opacity-0 scale-95" id="modal-container">
+            <!-- 阅读进度条 -->
+            <div id="reading-progress" class="absolute top-0 left-0 right-0 h-1 bg-primary/30">
+                <div id="progress-bar" class="h-full bg-primary w-0 transition-all duration-100"></div>
+            </div>
+            
+            <h3 id="modalTitle" class="text-xl font-semibold mb-4 text-primary mt-2"></h3>
+            <div id="modalContent" class="text-gray-600 mb-6 max-h-[70vh] overflow-y-auto whitespace-pre-wrap leading-relaxed"></div>
+            <button id="modalClose" class="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary/90 transition-colors duration-300">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        // 分页核心变量
+        const ITEMS_PER_PAGE = 6; // 每页显示6篇
+        let currentPage = 1; // 当前页
+        let articles = []; // 存储所有文章数据的数组
+        let modalContentElement; // 模态框内容元素
+
+        // 渲染当前页文章
+        function renderArticles(page) {
+            const articleList = document.getElementById('article-list');
+            articleList.innerHTML = ''; // 清空列表
+            
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            const currentArticles = articles.slice(start, end); // 获取当前页文章
+            
+            // 渲染当前页文章（带渐入动画）
+            currentArticles.forEach((article, index) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 opacity-0 translate-y-4';
+                    
+                    // 使用data属性存储文章内容和标题，避免特殊字符问题
+                    card.innerHTML = `
+                        <h3 class="text-xl font-semibold mb-2 text-primary">${article.title}</h3>
+                        <p class="text-sm text-gray-500 mb-4">作者：${article.author} | 时期：${article.period}</p>
+                        <p class="text-gray-600 mb-4">${article.preview}</p>
+                        <button class="read-full-btn text-secondary hover:text-primary transition-colors duration-300"
+                                data-content="${encodeURIComponent(article.content)}"
+                                data-title="${encodeURIComponent(article.title)}">
+                            阅读全文
+                        </button>
+                    `;
+                    articleList.appendChild(card);
+                    
+                    // 触发动画
+                    setTimeout(() => {
+                        card.classList.remove('opacity-0', 'translate-y-4');
+                    }, 50);
+                }, index * 100); // 每个卡片延迟100ms出现
+            });
+        }
+
+        // 更新分页控件
+        function updatePagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ''; // 清空分页控件
+            
+            const totalPages = Math.ceil(articles.length / ITEMS_PER_PAGE); // 总页数
+            if (totalPages <= 1) return; // 只有1页时不显示分页
+
+            // 上一页按钮
+            const prevBtn = document.createElement('button');
+            prevBtn.className = `px-4 py-2 rounded border transition-all ${currentPage > 1 ? 'border-primary text-primary hover:bg-primary hover:text-white' : 'border-gray-300 text-gray-400 cursor-not-allowed'}`;
+            prevBtn.innerHTML = '<i class="fa fa-angle-left"></i>';
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderArticles(currentPage);
+                    updatePagination();
+                    document.getElementById('article-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+            pagination.appendChild(prevBtn);
+
+            // 页码按钮（简化版：只显示当前页、前后各1页和省略号）
+            for (let i = 1; i <= totalPages; i++) {
+                // 显示首尾页、当前页及前后页，其余用省略号代替
+                if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 1) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = `px-4 py-2 rounded transition-all ${i === currentPage ? 'bg-primary text-white' : 'border border-gray-300 text-gray-600 hover:bg-primary hover:text-white hover:border-primary'}`;
+                    pageBtn.textContent = i;
+                    pageBtn.onclick = () => {
+                        currentPage = i;
+                        renderArticles(currentPage);
+                        updatePagination();
+                        document.getElementById('article-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    };
+                    pagination.appendChild(pageBtn);
+                } else if (i === 2 || i === totalPages - 1) {
+                    // 添加省略号（避免重复显示）
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'px-2 text-gray-400';
+                    ellipsis.textContent = '...';
+                    pagination.appendChild(ellipsis);
+                }
+            }
+
+            // 下一页按钮
+            const nextBtn = document.createElement('button');
+            nextBtn.className = `px-4 py-2 rounded border transition-all ${currentPage < totalPages ? 'border-primary text-primary hover:bg-primary hover:text-white' : 'border-gray-300 text-gray-400 cursor-not-allowed'}`;
+            nextBtn.innerHTML = '<i class="fa fa-angle-right"></i>';
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderArticles(currentPage);
+                    updatePagination();
+                    document.getElementById('article-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+            pagination.appendChild(nextBtn);
+
+            // 页码跳转输入框
+            const jumpContainer = document.createElement('div');
+            jumpContainer.className = 'flex items-center ml-4';
+            jumpContainer.innerHTML = `
+                <input type="number" id="pageInput" min="1" max="${totalPages}" value="${currentPage}" 
+                    class="w-16 px-2 py-2 border border-gray-300 rounded mx-2">
+                <button onclick="jumpToPage(${totalPages})" class="px-3 py-2 bg-secondary text-white rounded hover:bg-secondary/90 transition-colors">跳转</button>
+            `;
+            pagination.appendChild(jumpContainer);
+        }
+
+        // 页码跳转功能
+        function jumpToPage(totalPages) {
+            const pageInput = document.getElementById('pageInput');
+            const page = parseInt(pageInput.value);
+            if (page >= 1 && page <= totalPages && !isNaN(page)) {
+                currentPage = page;
+                renderArticles(currentPage);
+                updatePagination();
+                document.getElementById('article-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // 更新阅读进度
+        function updateReadingProgress() {
+            const scrollTop = modalContentElement.scrollTop;
+            const scrollHeight = modalContentElement.scrollHeight - modalContentElement.clientHeight;
+            const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            document.getElementById('progress-bar').style.width = `${scrollPercent}%`;
+        }
+
+        // 显示全文模态框
+        function showFullContent(content, title) {
+            const modal = document.getElementById('fullContentModal');
+            const modalContainer = document.getElementById('modal-container');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            // 存储模态框内容元素引用
+            modalContentElement = document.getElementById('modalContent');
+            
+            if (content && title) {
+                // 重置进度条
+                document.getElementById('progress-bar').style.width = '0%';
+                
+                // 设置内容
+                modalTitle.textContent = title;
+                modalContentElement.textContent = content;
+                
+                // 显示模态框并添加动画
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex';
+                
+                // 重置滚动位置
+                modalContentElement.scrollTop = 0;
+                
+                // 触发重排后添加动画类
+                setTimeout(() => {
+                    modalContainer.classList.remove('opacity-0', 'scale-95');
+                    modalContainer.classList.add('opacity-100', 'scale-100');
+                }, 10);
+                
+                // 添加滚动监听
+                modalContentElement.addEventListener('scroll', updateReadingProgress);
+            } else {
+                alert('无有效文章内容');
+            }
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            const modal = document.getElementById('fullContentModal');
+            const modalContainer = document.getElementById('modal-container');
+            
+            // 移除滚动监听
+            modalContentElement.removeEventListener('scroll', updateReadingProgress);
+            
+            // 添加关闭动画
+            modalContainer.classList.remove('opacity-100', 'scale-100');
+            modalContainer.classList.add('opacity-0', 'scale-95');
+            
+            // 动画完成后隐藏
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // 加载文章数据并初始化分页
+        document.addEventListener('DOMContentLoaded', async () => {
+            const basePath = 'resources/essays/articles/'; // 文章存放目录
+            const maxFiles = 50;
+            const loadingState = document.getElementById('loading-state');
+            const emptyState = document.getElementById('empty-state');
+            const articleList = document.getElementById('article-list');
+
+            try {
+                // 循环加载文件
+                for (let i = 1; i <= maxFiles; i++) {
+                    const fileName = `file${i}.txt`;
+                    try {
+                        const response = await fetch(`${basePath}${fileName}`);
+                        if (!response.ok) throw new Error('文件不存在');
+                        
+                        const content = await response.text();
+                        const lines = content.split('\n').filter(line => line.trim() !== '');
+
+                        // 提取文章信息
+                        const title = lines[0] || '无标题';
+                        const author = lines[1] || '未知作者';
+                        const period = lines[2] || '未知时期';
+                        const fullContent = lines.slice(3).join('\n');
+                        const preview = lines.slice(3).join(' ').substring(0, 60) + '...';
+
+                        // 将文章数据存入数组（供分页使用）
+                        articles.push({ title, author, period, content: fullContent, preview });
+
+                    } catch (error) {
+                        if (i === 1) break; // 第一个文件就出错，停止加载
+                        continue; // 其他文件出错，继续加载下一个
+                    }
+                }
+
+                // 隐藏加载状态
+                loadingState.classList.add('hidden');
+
+                // 处理无数据情况
+                if (articles.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+
+                // 显示文章列表
+                articleList.classList.remove('hidden');
+
+                // 初始化渲染（加载完成后显示第一页）
+                renderArticles(currentPage);
+                updatePagination();
+
+            } catch (error) {
+                console.error('加载文章出错:', error);
+                loadingState.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                emptyState.innerHTML = `
+                    <div class="inline-block p-4 rounded-full bg-red-50 mb-4">
+                        <i class="fa fa-exclamation-triangle text-3xl text-red-400"></i>
+                    </div>
+                    <p class="text-gray-600 text-lg">加载失败</p>
+                    <p class="text-gray-400 mt-2">无法加载文章，请稍后重试</p>
+                    <button onclick="window.location.reload()" class="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-all">
+                        重试
+                    </button>
+                `;
+            }
+
+            // 移动端菜单切换
+            document.getElementById('mobile-menu-button').addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+
+            // 关闭模态框事件
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+
+            // 点击模态框背景关闭
+            document.getElementById('fullContentModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('fullContentModal')) {
+                    closeModal();
+                }
+            });
+
+            // 使用事件委托处理阅读全文按钮点击事件
+            document.getElementById('article-list').addEventListener('click', (e) => {
+                if (e.target.classList.contains('read-full-btn')) {
+                    // 从data属性获取编码后的内容和标题
+                    const content = decodeURIComponent(e.target.dataset.content);
+                    const title = decodeURIComponent(e.target.dataset.title);
+                    showFullContent(content, title);
+                }
+            });
+
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-primary', 'shadow-md');
+                    navbar.classList.remove('bg-primary/90');
+                } else {
+                    navbar.classList.remove('bg-primary', 'shadow-md');
+                    navbar.classList.add('bg-primary/90');
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+    </style>
+</body>
+</html>

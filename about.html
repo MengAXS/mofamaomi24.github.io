@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梦岸一方 - 关于我们</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A3B4C',
+                        secondary: '#D4AF37',
+                        accent: '#6A8CAF',
+                        neutral: '#F5F5F5',
+                        dark: '#1A202C'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 300ms;
+            }
+            .backdrop-blur-sm {
+                backdrop-filter: blur(4px);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-neutral text-dark min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-300">
+        <nav class="bg-primary/90 backdrop-blur-sm text-white">
+            <div class="container mx-auto px-4 py-3 md:py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <a href="index.html" class="text-2xl md:text-3xl font-bold text-secondary flex items-center">
+                            <span class="fa fa-bookmark-o mr-2"></span>
+                            <span>梦岸一方</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 桌面导航 -->
+                    <div class="hidden md:flex space-x-8">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium text-secondary">关于我们</a>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <button id="mobile-menu-button" class="md:hidden text-white text-xl">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+                
+                <!-- 移动端导航菜单 -->
+                <div id="mobile-menu" class="md:hidden hidden mt-4 pb-2 animate-fade-in">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1 text-secondary">关于我们</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 页面标题区域 -->
+    <section class="pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-br from-primary to-dark text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-4 leading-tight animate-slide-up text-shadow">
+                    关于我们
+                </h1>
+                <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-200 max-w-2xl animate-slide-up">
+                    了解梦岸一方的故事和使命
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们内容 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto space-y-12">
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-dark">我们的故事</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        梦岸一方诞生于对创意和美好的不懈追求。我们相信，每个人心中都有一个属于自己的梦岸，那里充满了灵感与激情。自2023年8月13日成立以来，岸梦学社始终秉持着以热爱探索一切的理念，在视频、网络、游戏、文学、音乐等领域不断探索与前行。
+                        历经近2年的积淀与发展，我们从一个小小的社团，并没有成长为具有广泛影响力的社团组织。
+                        创立初期，岸梦学社仅有2名成员，大家凭借着对文学著作、视频制作的热爱与执着，共同谋划着社团的未来。我们通过发布各类视频、文案，探索探索着良性发展的道路。                       
+                        随着团队规模的不断稳定，我们逐渐明确了自身的发展定位与方向。我们专注于文学创作，致力于打造诉说自我思想，交流生活经验的平台。在此过程中，我们积累了丰富的资源与经验，为社团的长远发展奠定了坚实基础。                       
+                        进入网络发展时期，岸梦学社迎来了前所未有的发展机遇。我们与多家AI建立了深度合作关系，充分利用AI技术提升创作效率，共同推动文学领域的发展与进步。同时，我们也积极参与社会话题讨论，履行社会责任，将社团的影响力延伸至更广泛的领域。
+                        我们深知，这一切的成就离不开每一位成员的付出与努力，也离不开各位的支持与厚爱。
+                        展望未来，岸梦学社将继续秉持创作初心，不断创新与进取。以本网站为起新起点，继续探索新的创作领域。
+                        
+                    </p>
+                </div>
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-dark">我们的团队</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        梦岸一方的团队由一群热爱创意和互联网的年轻人组成。我们来自不同的背景，但都有一个共同的方向：以热爱探索一切。
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- 团队成员卡片示例 -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full mx-auto mb-6">
+                                <img src="resources/pictures/半梦半醒.jpg" alt="团队成员 1" class="object-cover w-full h-full">
+                            </div>
+                            <h3 class="text-xl font-semibold text-center text-dark mb-2">半梦半醒</h3>
+                            <p class="text-gray-600 text-center text-sm mb-4">脑溢学的创意策划</p>
+                            <p class="text-gray-700 text-sm text-center">
+                                热爱创意和设计，有行动力和激情，致力于打造一个充满灵感交流的平台。
+                            </p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full mx-auto mb-6">
+                                <img src="resources/pictures/彼岸.jpg" alt="团队成员 2" class="object-cover w-full h-full">
+                            </div>
+                            <h3 class="text-xl font-semibold text-center text-dark mb-2">彼岸</h3>
+                            <p class="text-gray-600 text-center text-sm mb-4">疯狂的文章创作机</p>
+                            <p class="text-gray-700 text-sm text-center">
+                                细致入微地洞悉生活，擅长创作各种类型的文章，包括但不限于小说、科普、思考、情感、生活等。
+                            </p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-sm">
+                            <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full mx-auto mb-6">
+                                <img src="resources/pictures/学道.jpg" alt="团队成员 3" class="object-cover w-full h-full">
+                            </div>
+                            <h3 class="text-xl font-semibold text-center text-dark mb-2">学道</h3>
+                            <p class="text-gray-600 text-center text-sm mb-4">死脑筋的技术总监</p>
+                            <p class="text-gray-700 text-sm text-center">
+                                经通C、C++、C#、Python、GO、PHP、JavaScript、SQL、HTML、CSS等各种编程语言，擅长添砖JAVA的幕后黑手。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <a href="index.html" class="text-2xl font-bold text-secondary flex items-center mb-6">
+                        <span class="fa fa-bookmark-o mr-2"></span>
+                        <span>梦岸一方</span>
+                    </a>
+                    <p class="text-gray-300 mb-6">以热爱探索一切。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-wechat"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">首页</a></li>
+                        <li><a href="essays.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸杂谈</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">精选文章</a></li>
+                        <li><a href="showcase.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸一方</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-3 text-secondary"></i>
+                            <span class="text-gray-300">梦中的彼岸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-3 text-secondary"></i>
+                            <span class="text-gray-300">聆听彼岸的呼唤吧</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-3 text-secondary"></i>
+                            <span class="text-gray-300">@dreamshore.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">订阅更新</h4>
+                    <p class="text-gray-300 mb-4">订阅我们的电子邮件，获取最新内容和活动通知。</p>
+                    
+                    <p class="text-gray-400 text-sm">我们尊重您的隐私，不会向第三方分享您的信息。</p>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 梦岸一方. 保留所有权利.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">隐私政策</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">使用条款</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">Cookie 政策</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端菜单脚本 -->
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>

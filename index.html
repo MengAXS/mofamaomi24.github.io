@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梦岸一方 - 以热爱探索一切</title>
+
+    <!-- 网站图标 -->
+    <link rel="icon" href="resources/pictures/favicon.ico" type="image/x-icon">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A3B4C',
+                        secondary: '#D4AF37',
+                        accent: '#6A8CAF',
+                        neutral: '#F5F5F5',
+                        dark: '#1A202C'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in-delay': 'fadeIn 0.5s ease-in-out 0.3s forwards',
+                        'slide-up-delay': 'slideUp 0.5s ease-out 0.6s forwards',
+                        'slide-up-delay-2': 'slideUp 0.5s ease-out 0.9s forwards'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 300ms;
+            }
+            .backdrop-blur-sm {
+                backdrop-filter: blur(4px);
+            }
+            .typing-cursor {
+                border-right: 2px solid currentColor;
+                animation: cursor-blink 1s step-end infinite;
+            }
+            @keyframes cursor-blink {
+                from, to { border-color: transparent }
+                50% { border-color: currentColor }
+            }
+            .section-fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            .section-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-neutral text-dark min-h-screen flex flex-col">
+    <!-- 页面加载动画 -->
+    <div id="page-loader" class="fixed inset-0 z-50 flex items-center justify-center bg-primary">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-secondary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-white text-xl font-medium">梦岸一方加载中...</p>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full z-40 transition-all duration-300 opacity-0">
+        <nav class="bg-primary/90 backdrop-blur-sm text-white">
+            <div class="container mx-auto px-4 py-3 md:py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <a href="index.html" class="text-2xl md:text-3xl font-bold text-secondary flex items-center">
+                            <span class="fa fa-bookmark-o mr-2"></span>
+                            <span>梦岸一方</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 桌面导航 -->
+                    <div class="hidden md:flex space-x-8">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium text-secondary">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium">关于我们</a>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <button id="mobile-menu-button" class="md:hidden text-white text-xl">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+                
+                <!-- 移动端导航菜单 -->
+                <div id="mobile-menu" class="md:hidden hidden mt-4 pb-2 animate-fade-in">
+                    <div class="flex flex-col space-y-3">
+                        <a href="index.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1 text-secondary">首页</a>
+                        <a href="essays.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">梦岸杂谈</a>
+                        <a href="articles.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">精选文章</a>
+                        <a href="showcase.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">梦岸一方</a>
+                        <a href="about.html" class="hover:text-secondary transition-colors duration-300 font-medium py-1">关于我们</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/seed/dreamshore/1920/1080" alt="梦岸一方背景" class="w-full h-full object-cover opacity-0" id="hero-image">
+            <div class="absolute inset-0 bg-primary/60"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="text-[clamp(2.5rem,5vw,4.5rem)] font-bold mb-4 text-white animate-slide-up text-shadow">
+                梦岸一方
+            </h1>
+            
+            <!-- 打字机效果副标题容器 -->
+            <div class="h-[clamp(1.2rem,3vw,1.75rem)] mb-6 flex justify-center items-center">
+                <p id="typing-text" class="text-[clamp(1.2rem,3vw,1.75rem)] text-gray-100 max-w-3xl mx-auto font-medium typing-cursor"></p>
+            </div>
+            
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-200 max-w-2xl mx-auto mb-10 opacity-0" id="static-subtitle">
+                以热爱探索一切
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up-delay-2 opacity-0" id="action-buttons">
+                <a href="#features" class="bg-secondary hover:bg-secondary/90 text-primary font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                    探索内容
+                </a>
+                <a href="#modules" class="bg-transparent border-2 border-white hover:bg-white/10 text-white font-bold py-3 px-8 rounded-full transition-all duration-300">
+                    了解更多
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce opacity-0" id="scroll-indicator">
+            <a href="#features" class="text-white text-3xl">
+                <i class="fa fa-angle-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 网站特色 -->
+    <section id="features" class="py-20 bg-white section-fade-in">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-4">梦岸一方特色</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">探索我们精心打造的内容模块，发现思想的火花与灵感的源泉</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 特色1 -->
+                <div class="bg-neutral rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 feature-card">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-pencil text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">梦岸杂谈</h3>
+                    <p class="text-gray-600">记录生活中的点滴感悟，分享思想的火花与灵感的瞬间。这里是您的心灵避风港，思想的自由天地。</p>
+                    <a href="essays.html" class="inline-block mt-4 text-accent hover:text-primary font-medium transition-colors duration-300">
+                        查看更多 <i class="fa fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 特色2 -->
+                <div class="bg-neutral rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 feature-card">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-book text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">精选文章</h3>
+                    <p class="text-gray-600">汇集我们对于各领域的深度思考，为您提供有价值的见解和启发，帮助您拓宽视野，深化认知。</p>
+                    <a href="articles.html" class="inline-block mt-4 text-accent hover:text-primary font-medium transition-colors duration-300">
+                        查看更多 <i class="fa fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 特色3 -->
+                <div class="bg-neutral rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 feature-card">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-picture-o text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">梦岸一方</h3>
+                    <p class="text-gray-600">展示创意作品与艺术表达，为《梦岸一方》杂志提供展示平台，让更多优秀的作品被发现和欣赏。</p>
+                    <a href="showcase.html" class="inline-block mt-4 text-accent hover:text-primary font-medium transition-colors duration-300">
+                        查看更多 <i class="fa fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 模块介绍 -->
+    <section id="modules" class="py-20 bg-gradient-to-br from-primary to-dark text-white section-fade-in">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">探索我们的内容模块</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg">每个模块都代表着一个独特的思想领域，等待您的探索与发现</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- 模块1 -->
+                <div class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 module-card">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-pencil text-xl text-secondary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">梦岸杂谈</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6">这里是思想的自由天地，记录生活中的点滴感悟，分享灵感的瞬间与思考的火花。</p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>生活感悟与思考</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>个人所见与心得</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>创意写作与诗歌</span>
+                            </li>
+                        </ul>
+                        <a href="essays.html" class="inline-block bg-secondary/90 hover:bg-secondary text-primary font-medium py-2 px-6 rounded-full transition-all duration-300">
+                            访问模块
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 模块2 -->
+                <div class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 module-card">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-book text-xl text-secondary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">精选文章</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6">汇集我们对于各领域的深度思考，为您提供有价值的见解和启发，帮助您拓宽视野，深化认知。</p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>情感与价值向导</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>文化与艺术鉴赏</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>哲学与人生思考</span>
+                            </li>
+                        </ul>
+                        <a href="articles.html" class="inline-block bg-secondary/90 hover:bg-secondary text-primary font-medium py-2 px-6 rounded-full transition-all duration-300">
+                            访问模块
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 模块3 -->
+                <div class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 module-card">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-picture-o text-xl text-secondary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">梦岸一方</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6">展示创意作品与艺术表达，为《梦岸一方》杂志提供展示平台，让更多优秀的作品被发现和欣赏。</p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>AI视觉艺术</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>设计与创意展示</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>杂志项目分享</span>
+                            </li>
+                        </ul>
+                        <a href="showcase.html" class="inline-block bg-secondary/90 hover:bg-secondary text-primary font-medium py-2 px-6 rounded-full transition-all duration-300">
+                            访问模块
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 模块4 -->
+                <div class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-white/10 transition-all duration-300 module-card">
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-users text-xl text-secondary"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">关于我们</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6">了解我们的团队、理念和使命，以及如何与我们联系和合作，共同创造更有价值的内容。</p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>团队故事与理念</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>团队成员及介绍</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-check text-secondary mr-2"></i>
+                                <span>展望未来的愿景</span>
+                            </li>
+                        </ul>
+                        <a href="about.html" class="inline-block bg-secondary/90 hover:bg-secondary text-primary font-medium py-2 px-6 rounded-full transition-all duration-300">
+                            访问模块
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 内容声明 -->
+    <section class="py-20 bg-white section-fade-in">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-4">内容声明</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto text-lg">本网站以娱乐性质创立，并未获得备案，未用作任何违法用途，尊重作者文章著作权。
+                本网站所有内容全部免费阅读，不以任何形式收取费用！本站一切解释权归岸梦学社所有。
+                更多内容正在持续完善中，感谢您的关注与支持！</p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white pt-16 pb-8 section-fade-in">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <a href="index.html" class="text-2xl font-bold text-secondary flex items-center mb-6">
+                        <span class="fa fa-bookmark-o mr-2"></span>
+                        <span>梦岸一方</span>
+                    </a>
+                    <p class="text-gray-300 mb-6">以热爱探索一切。</p>
+                    <div class="flex space-x-4">
+                        <a href="javascript:alert('暂无~')" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-wechat"></i>
+                        </a>
+                        <a href="javascript:alert('暂无~')" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-qq"></i>
+                        </a>
+                        <a href="javascript:alert('暂无~')" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="https://www.bilibili.com" class="text-white hover:text-secondary transition-colors duration-300 text-xl">
+                            <i class="fa fa-play-circle"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">首页</a></li>
+                        <li><a href="essays.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸杂谈</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">精选文章</a></li>
+                        <li><a href="showcase.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">梦岸一方</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-secondary transition-colors duration-300">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-3 text-secondary"></i>
+                            <span class="text-gray-300">梦中的彼岸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-3 text-secondary"></i>
+                            <span class="text-gray-300">聆听彼岸的呼唤吧</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-3 text-secondary"></i>
+                            <span class="text-gray-300">@dreamshore.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">订阅更新</h4>
+                    <p class="text-gray-300 mb-4">订阅我们的电子邮件，获取最新内容和活动通知。</p>
+                    
+                    <p class="text-gray-400 text-sm">我们尊重您的隐私，不会向第三方分享您的信息。</p>
+                </div>
+            
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 梦岸一方. 保留所有权利.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">隐私政策</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">使用条款</a>
+                        <a href="#" class="text-gray-400 hover:text-secondary text-sm transition-colors duration-300">Cookie 政策</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 页面加载动画
+            const pageLoader = document.getElementById('page-loader');
+            const navbar = document.getElementById('navbar');
+            const heroImage = document.getElementById('hero-image');
+            const staticSubtitle = document.getElementById('static-subtitle');
+            const actionButtons = document.getElementById('action-buttons');
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            
+            // 模拟页面加载过程
+            setTimeout(() => {
+                // 隐藏加载动画
+                pageLoader.classList.add('opacity-0', 'pointer-events-none');
+                pageLoader.style.transition = 'opacity 0.5s ease-out';
+                
+                // 显示导航栏
+                setTimeout(() => {
+                    navbar.style.transition = 'opacity 0.5s ease-out';
+                    navbar.classList.add('opacity-100');
+                    
+                    // 淡入显示英雄区域图片
+                    heroImage.style.transition = 'opacity 1.5s ease-out';
+                    heroImage.classList.add('opacity-100');
+                    
+                    // 显示副标题和按钮
+                    setTimeout(() => {
+                        staticSubtitle.style.transition = 'opacity 0.8s ease-out 0.3s';
+                        staticSubtitle.classList.add('opacity-100');
+                        
+                        actionButtons.style.transition = 'opacity 0.8s ease-out 0.6s';
+                        actionButtons.classList.add('opacity-100');
+                        
+                        scrollIndicator.style.transition = 'opacity 0.8s ease-out 0.9s';
+                        scrollIndicator.classList.add('opacity-100');
+                    }, 300);
+                }, 300);
+            }, 1000);
+            
+            // 打字机效果实现
+            const texts = [
+                "欢迎来到梦岸一方",
+                "探索思想的彼岸",
+                "发现灵感的源泉",
+                "分享生活的点滴感悟",
+                "记录创意的火花"
+            ];
+            
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typingSpeed = 150;
+            const deletingSpeed = 75;
+            const delayBetweenTexts = 1500;
+            const typingElement = document.getElementById('typing-text');
+            
+            function typeText() {
+                const currentText = texts[textIndex];
+                
+                if (isDeleting) {
+                    // 删除文字
+                    typingElement.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    // 输入文字
+                    typingElement.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                // 控制打字速度
+                let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
+                
+                // 如果正在输入且完成当前文本
+                if (!isDeleting && charIndex === currentText.length) {
+                    isDeleting = true;
+                    typeSpeed = delayBetweenTexts; // 停留一段时间
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length; // 切换到下一个文本
+                    typeSpeed = 500; // 切换文本前的停顿
+                }
+                
+                setTimeout(typeText, typeSpeed);
+            }
+            
+            // 开始打字效果
+            setTimeout(typeText, 1500);
+            
+            // 移动端菜单切换
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // 关闭移动菜单
+                        document.getElementById('mobile-menu').classList.add('hidden');
+                    }
+                });
+            });
+            
+            // 滚动显示动画
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('section-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // 监听所有带section-fade-in类的元素
+            document.querySelectorAll('.section-fade-in').forEach(section => {
+                observer.observe(section);
+            });
+            
+            // 为特色卡片添加顺序显示动画
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `opacity 0.6s ease-out ${0.1 + index * 0.2}s, transform 0.6s ease-out ${0.1 + index * 0.2}s`;
+                
+                const cardObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                            cardObserver.unobserve(card);
+                        }
+                    });
+                }, observerOptions);
+                
+                cardObserver.observe(card);
+            });
+            
+            // 为模块卡片添加顺序显示动画
+            const moduleCards = document.querySelectorAll('.module-card');
+            moduleCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `opacity 0.6s ease-out ${0.1 + index * 0.2}s, transform 0.6s ease-out ${0.1 + index * 0.2}s`;
+                
+                const cardObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                            cardObserver.unobserve(card);
+                        }
+                    });
+                }, observerOptions);
+                
+                cardObserver.observe(card);
+            });
+            
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-primary', 'shadow-md');
+                    navbar.classList.remove('bg-primary/90');
+                } else {
+                    navbar.classList.remove('bg-primary', 'shadow-md');
+                    navbar.classList.add('bg-primary/90');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
